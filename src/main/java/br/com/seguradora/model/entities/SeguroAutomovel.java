@@ -2,6 +2,7 @@ package br.com.seguradora.model.entities;
 
 import br.com.seguradora.model.abstractions.Seguro;
 import br.com.seguradora.model.abstractions.Bem;
+import br.com.seguradora.model.entities.CoberturaContratada;
 import jakarta.persistence.Entity;
 import java.util.List;
 
@@ -10,16 +11,13 @@ public class SeguroAutomovel extends Seguro {
 
     public SeguroAutomovel() {}
 
-    public SeguroAutomovel(Bem bem, List<Cobertura> coberturas) {
+    public SeguroAutomovel(Bem bem, List<CoberturaContratada> coberturas) {
         super(bem, coberturas);
     }
 
     @Override
     public double calcularPreco() {
-        double soma = getCoberturas().stream()
-                .mapToDouble(c -> 1000.0 * c.getFatorPeso())
-                .sum();
-        setValorTotal(soma);
-        return soma;
+        // reuse base calculation from Seguro (soma valorSegurado * fatorPeso)
+        return super.calcularPreco();
     }
 }

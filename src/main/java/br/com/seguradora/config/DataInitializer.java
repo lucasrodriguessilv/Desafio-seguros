@@ -4,6 +4,7 @@ import br.com.seguradora.model.entities.Automovel;
 import br.com.seguradora.model.entities.Cobertura;
 import br.com.seguradora.model.entities.Cliente;
 import br.com.seguradora.model.entities.SeguroAutomovel;
+import br.com.seguradora.model.entities.CoberturaContratada;
 import br.com.seguradora.repository.ClienteRepository;
 import br.com.seguradora.repository.CoberturaRepository;
 import br.com.seguradora.repository.SeguroRepository;
@@ -34,16 +35,22 @@ public class DataInitializer implements CommandLineRunner {
 
         Cobertura colisao = new Cobertura("Colisão", 1.2);
         Cobertura roubo = new Cobertura("Roubo", 1.5);
-        // não salvar coberturas separadamente para evitar 'detached entity' ao persistir o seguro
+
+        // Salvar coberturas no catálogo primeiro
+        coberturaRepository.saveAll(Arrays.asList(colisao, roubo));
 
         Automovel auto = new Automovel("Carro pessoal", "ABC-1234", "Gol", 2018);
 
-        SeguroAutomovel seguro = new SeguroAutomovel(auto, Arrays.asList(colisao, roubo));
+        // Cliente define valores segurados para cada cobertura escolhida
+        CoberturaContratada cc1 = new CoberturaContratada(colisao, 30000.0);
+        CoberturaContratada cc2 = new CoberturaContratada(roubo, 20000.0);
+
+        SeguroAutomovel seguro = new SeguroAutomovel(auto, Arrays.asList(cc1, cc2));
         seguro.calcularPreco();
 
-        // Persistir o cliente com cascade para seguros e coberturas
+        // Persistir o cliente com cascade para seguros e coberturas contratadas
         Cliente cliente = new Cliente("Cliente Exemplo");
-        cliente.setSeguros(Arrays.asList(seguro));
+        cliente.addSeguro(seguro);
         clienteRepository.save(cliente);
     }
 }
