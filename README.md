@@ -1,6 +1,6 @@
 ## Desafio Sistema de Seguradora
 
-Projeto desenvolvido em Java 17 com Spring Boot 3.3.5 e MySQL, aplicando boas práticas de arquitetura e os princípios SOLID.
+Projeto desenvolvido em Java 17 com Spring Boot 3.3.5. O projeto foi configurado para usar o banco H2 em memória (ideal para testes).
 
 ### Objetivo
 
@@ -14,7 +14,7 @@ Java 17 <br>
 Spring Boot 3.3.5 <br>
 Spring Web <br>
 Spring Data JPA <br>
-MySQL <br>
+H2 (em memória) <br>
 Bean Validation (Jakarta Validation) <br>
 Spring Boot DevTools <br>
 Maven - experiencia com o maestro da aplicação (Banco do Brasil - BBPrevidencia) <br>
@@ -27,8 +27,22 @@ Princípios SOLID,
 DTOs e Camada de Serviço, 
 Validação de dados com Bean Validation.
 
-O projeto utiliza MySQL como banco de dados relacional.
-Antes de executar a aplicação, crie um banco de dados local (por exemplo, seguradora_db) e configure o arquivo application.properties com suas credenciais: <br>
+O projeto está configurado para utilizar o banco H2 em memória por padrão, portanto não é necessário instalar um banco externo para executar os testes.
+Instruções rápidas para executar localmente:
+
+- Compilar o projeto:
+
+```powershell
+mvn -f "c:\\Users\\Lucas\\Downloads\\Projeto\\pom.xml" clean package -DskipTests
+```
+
+- Executar a aplicação (ou use sua IDE):
+
+```powershell
+mvn -f "c:\\Users\\Lucas\\Downloads\\Projeto\\pom.xml" spring-boot:run
+```
+
+- Acesse a API em `http://localhost:8080` e o console H2 em `http://localhost:8080/h2-console` (driver: `org.h2.Driver`, JDBC URL: `jdbc:h2:mem:seguradora_db`, user: `sa`, senha vazia).
  
 Projeto criado do zero inicializado  fonte - http://spring.io/projects/spring-boot
 

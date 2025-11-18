@@ -2,8 +2,9 @@ package br.com.seguradora.model.abstractions;
 
 import jakarta.persistence.*;
 
-@MappedSuperclass
-public abstract class Bem {
+@Entity
+@Table(name = "bem")
+public class Bem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
